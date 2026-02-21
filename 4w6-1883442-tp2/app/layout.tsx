@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { ContextWrapper } from "./_components/context-wrapper";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -45,7 +46,7 @@ export default function RootLayout({
 		</div>
 	</header>
 
-        {children}
+        <ContextWrapper children={children} />
 
         <footer className="w-full">
 		  <div className="py-1">
