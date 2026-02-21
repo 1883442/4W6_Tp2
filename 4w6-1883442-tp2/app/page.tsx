@@ -1,84 +1,77 @@
 "use client";
 import Image from "next/image";
-import { Key, useContext, useState } from "react";
+import { Key, useContext, useEffect, useState } from "react";
 import { Artist } from "./_types/artiste";
 import { CounterContext } from "./_components/context-wrapper";
 import axios from "axios";
 import { ArtistCard } from "./_components/artiste-card";
 import { spotifyRequest } from "./spotify-interceptor";
+import { SpotifyContext } from "./_components/context-spotify";
+import UseSpotifyCall from "./_hooks/use-spotify-call";
+import { CurrentArtistContext } from "./_components/context-currentArtist";
 
 export default function Home() {
 
 	const [userInput, setUserInput] = useState<string>("");
-	const {CLIENT_ID, CLIENT_SECRET, spotifyToken, setSpotifyToken ,listFavoris, setListFavoris,currentArtist, setCurrentArtist} = useContext(CounterContext);
+	// const {listFavoris, setListFavoris} = useContext(CounterContext);
+	const spotifyContext = useContext(SpotifyContext);
+	const useSpotifyHook = UseSpotifyCall();
+	const useArtistContext = useContext(CurrentArtistContext);
+	const [listArtiste, setListeArtist] = useState<Artist[]>()
+
+
+
+	 useEffect(() => {
+    const jsonArtist : string | null = localStorage.getItem("favorisListe");
+
+    // Si pas vide, on récupère l'info
+    if(jsonArtist != null){
+      setListeArtist(JSON.parse(jsonArtist));
+    }
+
+
+  },[]);
+
+
+  function ajusterTab(inputArtist : Artist) {
+	let vieuxTab : Artist[] = [];
+	for(let a of listArtiste!) {
+		vieuxTab.push(new Artist(a.id,a.name,a.imageUrl));
+	}
+	vieuxTab.push(new Artist(inputArtist.id,inputArtist.name,inputArtist.imageUrl));
+	setListeArtist(vieuxTab);
+	localStorage.setItem("favorisListe", JSON.stringify(vieuxTab));
+  }
 
 	function emptyFavoris() {
 		let emptyList : Artist[] = [];
-		setListFavoris(emptyList);
+		// if(useArtistContext?.setListFavoris != null)useArtistContext?.setListFavoris(emptyList);
+		setListeArtist(emptyList);
 		localStorage.clear;
 	}
 
 
-	function addArtist(newArtist : Artist) {
-		let oldArtistList : any[] = [];
-		for(let a  in listFavoris) {
-			// oldArtistList.push(new Artist(a.name,a.id,a.imgUrl));
-			oldArtistList.push(a);
-		}
-		oldArtistList.push(newArtist);
-		setListFavoris(oldArtistList);
-		localStorage.setItem("favorisListe", listFavoris);
+	async function ajouterAuFavoris(artisteRechercher : string) {
+		var response = await useSpotifyHook.getArtist(artisteRechercher);
+		ajusterTab(response!);
 	}
 
-
-	 async function connect() {
-
-        // Attention ! Pour une fois, on utilise une requête POST
-        const response = await axios.post("https://accounts.spotify.com/api/token",
-            // On joint un contenu (body) à la requête
-            new URLSearchParams({ grant_type: "client_credentials" }), {
-            // On joint des en-têtes (headers) à la requête
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded",
-                "Authorization": "Basic " + btoa(CLIENT_ID + ":" + CLIENT_SECRET)
-            }
-        });
-        console.log(response.data);
-        // response.data.access_token contient le token qu'on voulait obtenir !
-        setSpotifyToken(response.data.access_token);
-		localStorage.setItem("token", response.data.access_token);
-    }
-
-
-	async function getArtist() { 
-
-		try {
-	  	const response = await spotifyRequest.get('https://api.spotify.com/v1/search?type=artist&offset=0&limit=1&q=' + userInput);
-	    console.log(response.data);
-	  	 var artiste =  new Artist(response.data.artists.items[0].id, response.data.artists.items[0].name, response.data.artists.items[0].images[0].url);
-		 addArtist(artiste);
-	 	 console.log(listFavoris);
-		}
-		catch(e) {
-			console.log(e);
-		}
-	}
 
   return (
        <main className="w-5xl mx-auto my-4">
 		<div className="flex">
 			<div className="flex-1 p-3">
 				<h3 className="text-xl font-bold">Ajouter un artiste</h3>
-				<input onClick={() => connect()} type="submit" value="Connect" className="lightButton" />
+				<input onClick={() => useSpotifyHook.connect()} type="submit" value="Connect" className="lightButton" />
 				<input type="text" value={userInput} onChange={(e) => setUserInput(e.target.value)} name="artist" placeholder="Nana Mouskouri" className="lightInput my-2" />
-				<input onClick={() => getArtist()} type="submit" value="Rechercher" className="lightButton" />
+				<input onClick={() => ajouterAuFavoris(userInput)} type="submit" value="Rechercher" className="lightButton" />
 			</div>
 			<div className="flex-3 p-3 text-center">
 				<h2 className="text-2xl font-bold">Vos artistes</h2>
 				<div className="flex flex-wrap mt-2">
 					{/* Mettre ? avant map afin de verifier si il existe, il est capricieux et throw une erreure sinon. */}
-					{listFavoris?.map(
-						(i: { id: Key | null | undefined; name: string; imgUrl: string; }) => <ArtistCard key={i.id} artistName={i.name}  imgUrl={i.imgUrl}/>
+					{listArtiste?.map(
+						(i: Artist) => <ArtistCard key={i.id} artist={i}/>
 					)}
 				</div>
 				<div className="flex justify-center mt-2">
