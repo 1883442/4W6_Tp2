@@ -13,8 +13,6 @@ import { CurrentArtistContext } from "./_components/context-currentArtist";
 export default function Home() {
 
 	const [userInput, setUserInput] = useState<string>("");
-	// const {listFavoris, setListFavoris} = useContext(CounterContext);
-	const spotifyContext = useContext(SpotifyContext);
 	const useSpotifyHook = UseSpotifyCall();
 	const useArtistContext = useContext(CurrentArtistContext);
 	const [listArtiste, setListeArtist] = useState<Artist[]>()

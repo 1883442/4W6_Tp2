@@ -9,7 +9,8 @@ import { Chanson } from "../_types/chanson";
 export default function Song() {
 const useSpotifyHook = UseSpotifyCall();
 const[songList, setSongList] = useState<Chanson[]>();
-const {currentAlbum,setCurrentAlbum} = useContext(CounterContext);
+const {currentAlbum,setCurrentAlbum,currentVideo,setCurrentVideo} = useContext(CounterContext);
+const YT_URL = "https://www.youtube.com/embed/";
 
 useEffect( () => {
 placeSongs(currentAlbum.id);
@@ -20,16 +21,26 @@ placeSongs(currentAlbum.id);
     setSongList(listChansons);
 }
 
+
+
 return(
     	<main className="w-5xl mx-auto my-4">
 		<h2 className="text-center text-2xl py-1">Chansons de {currentAlbum.name}</h2>
 		<div className="flex m-2 flex-wrap">
 			{songList?.map(
-                (i) => <ChansonCard key={i.id} id={i.id} name={i.name} lenght={i.lenght} />
+                (i) => <ChansonCard key={i.id} id={i.id} name={i.name} lenght={i.lenght}/>
             )}
 		</div>
 		<div className="flex justify-center">
-			<img src="images/video.png" alt="Vidéo youtube" />
+			{/* <img src="images/video.png" alt="Vidéo youtube" /> */}
+			{currentVideo && (
+			<iframe width="560" height="315" src={YT_URL + currentVideo} title="YouTube video player" 
+      		allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+      		referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+			)
+
+			}
+			
 		</div>
 	</main>
 )

@@ -11,7 +11,7 @@ import { Chanson } from "../_types/chanson";
 
 export default function UseSpotifyCall() {
    
-    const { CLIENT_ID, CLIENT_SECRET, setSpotifyToken} = useContext(CounterContext);
+    const { CLIENT_ID, CLIENT_SECRET, setSpotifyToken, currentVideo, setCurrentVideo} = useContext(CounterContext);
     const useArtistContext = useContext(CurrentArtistContext);
    
     function addArtist(newArtist : Artist) {
@@ -92,14 +92,20 @@ async function getSongs(albumId : string){
 }
 
 
-async function searchYoutube() {
-    
+async function searchYoutube( artistName : string, songName : string) {
+    const YT_URL = "https://www.youtube.com/embed/";
+    const apiKey = "AIzaSyCxxpwgifKLBZKELWmXAYQQ7ungz6JVGkQ";
+    const urlRequete = `https://www.googleapis.com/youtube/v3/search?type=video&part=id&maxResults=1&key=${apiKey}&q=${artistName} ${songName}`;
+    let response = await axios.get(urlRequete);
+    console.log(response.data);
+    console.log(response.data.items?.[0]?.id.videoId);
+    setCurrentVideo(response.data.items?.[0]?.id.videoId);
 }
 
 
 
 
-    return {connect,addArtist,getArtist, getAlbums,getSongs};
+    return {connect,addArtist,getArtist, getAlbums,getSongs,searchYoutube};
 
 }
 
