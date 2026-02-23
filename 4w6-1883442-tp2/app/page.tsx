@@ -35,8 +35,10 @@ export default function Home() {
 
   function ajusterTab(inputArtist : Artist) {
 	let vieuxTab : Artist[] = [];
-	for(let a of listArtiste!) {
+	if(listArtiste != undefined) {
+		for(let a of listArtiste!) {
 		vieuxTab.push(new Artist(a.id,a.name,a.imageUrl));
+	}
 	}
 	vieuxTab.push(new Artist(inputArtist.id,inputArtist.name,inputArtist.imageUrl));
 	setListeArtist(vieuxTab);
@@ -69,10 +71,14 @@ export default function Home() {
 			<div className="flex-3 p-3 text-center">
 				<h2 className="text-2xl font-bold">Vos artistes</h2>
 				<div className="flex flex-wrap mt-2">
+					 <div className="flex flex-wrap mt-2">
+					<div className="basis-1/3">
 					{/* Mettre ? avant map afin de verifier si il existe, il est capricieux et throw une erreure sinon. */}
 					{listArtiste?.map(
 						(i: Artist) => <ArtistCard key={i.id} artist={i}/>
 					)}
+						</div>
+				</div>
 				</div>
 				<div className="flex justify-center mt-2">
 					<button onClick={emptyFavoris} className="lightButton">Vider les favoris</button>

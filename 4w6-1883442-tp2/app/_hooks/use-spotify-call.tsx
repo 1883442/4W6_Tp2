@@ -6,6 +6,7 @@ import { spotifyRequest } from "../spotify-interceptor";
 import { useContext, useState } from "react";
 import { CounterContext } from "../_components/context-wrapper";
 import { CurrentArtistContext } from "../_components/context-currentArtist";
+import { Album } from "../_types/album";
 
 export default function UseSpotifyCall() {
    
@@ -64,7 +65,25 @@ export default function UseSpotifyCall() {
         }
     }
 
-    return {connect,addArtist,getArtist};
+
+async function getAlbums(artistId : string) {
+  const response = await spotifyRequest.get("https://api.spotify.com/v1/artists/" + artistId + "/albums?include_groups=album,single"
+  );
+  console.log(response.data);
+  let num : number = 0;
+  let albums = response.data.items;
+  let albumList : Album[] = [];
+    for(let a of albums) {
+        albumList.push(new Album(a.id, a.name, a.images[0].url));
+        console.log(a);
+        num++;
+    }
+  return albumList;
+}
+
+
+
+    return {connect,addArtist,getArtist, getAlbums};
 
 }
 

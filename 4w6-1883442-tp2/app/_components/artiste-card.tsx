@@ -6,30 +6,31 @@ import { Concert } from "../_types/concert";
 import { CounterContext } from "./context-wrapper";
 import { useRouter } from "next/navigation";
 import { Artist } from "../_types/artiste";
+import { CurrentArtistContext } from "./context-currentArtist";
 
 
 
 
 export function ArtistCard(props : { artist : Artist}) {
-const {setCurrentArtist} = useContext(CounterContext);
+const {currentArtist,setCurrentArtist} = useContext(CounterContext);
+
     const router = useRouter();
 
     function goToAlbum() {
-        setCurrentArtist(props)
-        router.push(`/album`)
+		console.log(props);
+        setCurrentArtist(props.artist);
+        router.push(`/album`);
     }
 
     return (
-                <div className="flex flex-wrap mt-2">
-					<div className="basis-1/3">
+                
 						<div className="m-1 p-1 artist">
 							<h4>{props.artist.name}</h4>
-							<img src={props.artist.imageUrl} alt="#{props.artistName}" />
+							<img src={props.artist.imageUrl} alt={`${props.artist.name}`}/>
 							<a><button className="lightButton mt-1 mr-1">Concerts</button></a>
 							<a><button onClick={() => goToAlbum()} className="lightButton mt-1">Albums</button></a>
 						</div>
-					</div>
-				</div>
+				
     );
 }
 
