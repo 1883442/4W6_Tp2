@@ -10,9 +10,8 @@ import UseSpotifyCall from "../_hooks/use-spotify-call";
 
 
 
-
 export default function Album(props : {artistId : string}) {
-const {CLIENT_ID, CLIENT_SECRET, spotifyToken, setSpotifyToken ,listFavoris, setListFavoris,currentArtist, setCurrentArtist} = useContext(CounterContext);
+const {currentArtist} = useContext(CounterContext);
 const [listAlbums, setListAlbums] = useState<Album[]>();
 const useSpotifyHook = UseSpotifyCall();
 
@@ -21,18 +20,6 @@ const useSpotifyHook = UseSpotifyCall();
  useEffect(() => {
 	setUpAlbums();
   },[]);
-
-
-// useEffect(() => {
-// 	async function getAlbums(artistId : string){
-//     const response = await spotifyRequest.get("https://api.spotify.com/v1/artists/" + artistId + "/albums?include_groups=album,single");
-//     console.log(response.data);
-// 	setListAlbums(response.data);
-// }
-
-
-// },[]);
-
 
 async function setUpAlbums(){
 	console.log(currentArtist);

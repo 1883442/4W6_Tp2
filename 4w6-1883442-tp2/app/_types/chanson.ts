@@ -1,3 +1,3 @@
 export class Chanson {
-    constructor(public id : number, public name : string , public lenght : number){};
+    constructor(public id : string, public name : string , public lenght : number){};
 }
