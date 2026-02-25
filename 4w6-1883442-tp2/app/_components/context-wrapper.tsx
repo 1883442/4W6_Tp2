@@ -3,6 +3,7 @@
 import React, { Children, createContext, useState } from "react";
 import { Artist } from "../_types/artiste";
 import { Album } from "../_types/album";
+import { Concert } from "../_types/concert";
 
 //error part d'ici, cela marque tout mes type d'objet dans le context comme any.
 //Ca devient chiant a maintenir faire plus de context different pour chaque utilite, ca ne respect pas le SINGLE de solid.
@@ -21,6 +22,7 @@ const [currentArtist, setCurrentArtist] = useState<Artist>()
 const [currentVideo, setCurrentVideo] = useState<any | undefined>();
 const [listFavoris, setListFavoris] = useState<Artist[]>([]);
 const [currentAlbum,setCurrentAlbum] = useState<Album | null>(null);
+const [listConcert,setListConcert] = useState<Concert | null>(null);
 
 return (
     <CounterContext.Provider value={{listFavoris, setListFavoris, CLIENT_ID, CLIENT_SECRET, spotifyToken, setSpotifyToken , currentArtist, setCurrentArtist, currentVideo, setCurrentVideo, currentAlbum,setCurrentAlbum}}>

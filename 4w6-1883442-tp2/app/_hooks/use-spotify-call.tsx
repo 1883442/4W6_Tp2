@@ -11,8 +11,10 @@ import { Chanson } from "../_types/chanson";
 
 export default function UseSpotifyCall() {
    
-    const { CLIENT_ID, CLIENT_SECRET, setSpotifyToken, currentVideo, setCurrentVideo} = useContext(CounterContext);
+    const { CLIENT_ID, CLIENT_SECRET, setSpotifyToken, currentVideo, setCurrentVideo,listConcert,setListConcert} = useContext(CounterContext);
     const useArtistContext = useContext(CurrentArtistContext);
+    const apiKey = "AIzaSyCxxpwgifKLBZKELWmXAYQQ7ungz6JVGkQ";
+    const bandsInTownApiKey : string = "2b32475766802ac01eefda45e9e42ea0";
    
     function addArtist(newArtist : Artist) {
         let oldArtistList : Artist[] = [];
@@ -94,7 +96,7 @@ async function getSongs(albumId : string){
 
 async function searchYoutube( artistName : string, songName : string) {
     const YT_URL = "https://www.youtube.com/embed/";
-    const apiKey = "AIzaSyCxxpwgifKLBZKELWmXAYQQ7ungz6JVGkQ";
+    // const apiKey = "AIzaSyCxxpwgifKLBZKELWmXAYQQ7ungz6JVGkQ";
     const urlRequete = `https://www.googleapis.com/youtube/v3/search?type=video&part=id&maxResults=1&key=${apiKey}&q=${artistName} ${songName}`;
     let response = await axios.get(urlRequete);
     console.log(response.data);
@@ -104,8 +106,18 @@ async function searchYoutube( artistName : string, songName : string) {
 
 
 
+async function getShows(artistName : string) {
+    const url : string = `https://rest.bandsintown.com/artists/${artistName}/events?app_id=${bandsInTownApiKey}`;
+    let response = await axios.get(url);
+    console.log(response.data);
+    //utilise ceci pour changer en number parseFloat(monString), pour les coordonnees.
+    let newList = response.data.venue;
 
-    return {connect,addArtist,getArtist, getAlbums,getSongs,searchYoutube};
+}
+
+
+
+    return {connect,addArtist,getArtist, getAlbums,getSongs,searchYoutube, getShows};
 
 }
 

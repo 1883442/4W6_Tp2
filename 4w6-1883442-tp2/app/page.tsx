@@ -14,7 +14,6 @@ export default function Home() {
 
 	const [userInput, setUserInput] = useState<string>("");
 	const useSpotifyHook = UseSpotifyCall();
-	const useArtistContext = useContext(CurrentArtistContext);
 	const [listArtiste, setListeArtist] = useState<Artist[]>()
 
 
