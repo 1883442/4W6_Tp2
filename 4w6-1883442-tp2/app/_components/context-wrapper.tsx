@@ -23,9 +23,10 @@ const [currentVideo, setCurrentVideo] = useState<any | undefined>();
 const [listFavoris, setListFavoris] = useState<Artist[]>([]);
 const [currentAlbum,setCurrentAlbum] = useState<Album | null>(null);
 const [listConcert,setListConcert] = useState<Concert | null>(null);
+const [markers, setMarkers] = useState<{lat : number, lng : number }[]>([]);
 
 return (
-    <CounterContext.Provider value={{listFavoris, setListFavoris, CLIENT_ID, CLIENT_SECRET, spotifyToken, setSpotifyToken , currentArtist, setCurrentArtist, currentVideo, setCurrentVideo, currentAlbum,setCurrentAlbum}}>
+    <CounterContext.Provider value={{listFavoris, setListFavoris, CLIENT_ID, CLIENT_SECRET, spotifyToken, setSpotifyToken , currentArtist, setCurrentArtist, currentVideo, setCurrentVideo, currentAlbum,setCurrentAlbum,markers, setMarkers,listConcert,setListConcert}}>
         {children}
     </CounterContext.Provider>
 )
