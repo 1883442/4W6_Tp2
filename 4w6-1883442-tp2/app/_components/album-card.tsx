@@ -4,10 +4,11 @@ import { useContext, useEffect } from "react";
 import { CounterContext } from "./context-wrapper";
 import { Album } from "../_types/album";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 export default function AlbumCard(props : {album : Album}) {
 	const {currentAlbum,setCurrentAlbum} = useContext(CounterContext);
-	
+	const t = useTranslations('Album')
 	 const router = useRouter();
 
 	function goToAlbum() {
@@ -21,7 +22,7 @@ export default function AlbumCard(props : {album : Album}) {
 					<div className="basis-1/3">
 					<h4>{props.album.name}</h4>
 					<img src={props.album.image}  alt="NOM_ALBUM" />
-					<a><button onClick={() => goToAlbum()} className="lightButton mt-1">Chansons</button></a>
+					<a><button onClick={() => goToAlbum()} className="lightButton mt-1">{t('Song')}</button></a>
 				</div>
 				</div>
 			</div>

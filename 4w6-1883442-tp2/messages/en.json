@@ -1,0 +1,31 @@
+{
+     "Layout" : {
+        "SpotMoi" : "Spot-me",
+        "YourArtist" : "Your artists",
+        "Fr" : "French",
+        "En" : "English",
+        "Yoink" : "I yoinked the teacher's template."
+    },
+
+    "Home" : {
+        "Add" : "Add an artist",
+        "Connect" : "Connect",
+        "Search" : "Search",
+        "Empty" : "Empty list of favorites",
+        "YourArtist" : "Your artists"
+    },
+     "Concert" : {
+        "ConcertOf" : "Concerts of",
+        "ConcertDate" : "{dateVar, date, ::yyyydMMMM}"
+
+    },
+    "Album" : {
+        "AlbumOf" : "Albums of ",
+        "Song" : "Songs"
+    },
+    "Song" : {
+        "SongOf" : "Songs of ",
+        "Listen" : "Listen"
+    }
+
+}

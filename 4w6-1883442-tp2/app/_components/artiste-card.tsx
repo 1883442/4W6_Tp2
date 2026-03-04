@@ -7,13 +7,13 @@ import { CounterContext } from "./context-wrapper";
 import { useRouter } from "next/navigation";
 import { Artist } from "../_types/artiste";
 import { CurrentArtistContext } from "./context-currentArtist";
+import { useTranslations } from "next-intl";
 
 
 
 
 export function ArtistCard(props : { artist : Artist}) {
 const {currentArtist,setCurrentArtist} = useContext(CounterContext);
-
     const router = useRouter();
 
     function goToAlbum(page : string) {

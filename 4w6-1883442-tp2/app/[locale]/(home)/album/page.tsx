@@ -1,12 +1,12 @@
 "use client";
 
 import { useContext, useEffect, useState } from "react"
-import AlbumCard from "../_components/album-card";
-import { CounterContext } from "../_components/context-wrapper";
-import { spotifyRequest } from "../spotify-interceptor";
-import { Album } from "../_types/album";
-import { Artist } from "../_types/artiste";
-import UseSpotifyCall from "../_hooks/use-spotify-call";
+import AlbumCard from "../../../_components/album-card";
+import { CounterContext } from "../../../_components/context-wrapper";
+import { spotifyRequest } from "../../../spotify-interceptor";
+import { Album } from "../../../_types/album";
+import { Artist } from "../../../_types/artiste";
+import UseSpotifyCall from "../../../_hooks/use-spotify-call";
 
 
 

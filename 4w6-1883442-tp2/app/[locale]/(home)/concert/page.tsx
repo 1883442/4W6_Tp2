@@ -1,14 +1,16 @@
 "use client";
 
 import { Key, useContext, useEffect } from "react";
-import { CounterContext } from "../_components/context-wrapper";
-import ConcertCart from "../_components/concert-card";
-import UseSpotifyCall from "../_hooks/use-spotify-call";
 import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
+import { CounterContext } from "@/app/_components/context-wrapper";
+import UseSpotifyCall from "@/app/_hooks/use-spotify-call";
+import ConcertCart from "@/app/_components/concert-card";
+import { useTranslations } from "next-intl";
 
 export default function Concert() {
 const {currentArtist, setCurrentArtist,listConcert,setListConcert,markers, setMarkers} = useContext(CounterContext);
 const useSpotifyHook = UseSpotifyCall();
+const t = useTranslations('Concert');
 
 useEffect(() => {
 	if(currentArtist != undefined) {
@@ -30,7 +32,7 @@ useEffect(() => {
 
     return(
 	<main className="w-5xl mx-auto my-4">
-		<h2 className="text-center text-2xl py-1">Concerts de {currentArtist.name}</h2>
+		<h2 className="text-center text-2xl py-1">{t('ConcertOf')} {currentArtist.name}</h2>
 		<div className="mx-auto w-2xl artist">
 
 		{ isLoaded && 

@@ -1,0 +1,31 @@
+{
+    "Layout" : {
+        "SpotMoi" : "Spot-moi",
+        "YourArtist" : "Vos artistes",
+         "Fr" : "Français",
+        "En" : "Anglais",
+        "Yoink" : "J'ai yoink le template de l'enseignant."
+    },
+
+      "Home" : {
+        "Add" : "Ajouter un artist",
+        "Connect" : "Se Connecter",
+        "Search" : "Rechercher",
+        "Empty" : "Vider la liste des favoris",
+        "YourArtist" : "Vos artistes"
+    },
+    "Concert" : {
+        "ConcertOf" : "Concerts de",
+        "ConcertDate" : "{dateVar, date, ::yyyyMMMMd}"
+
+    },
+    "Album" : {
+        "AlbumOf" : "Albums de ",
+        "Song" : "Chansons"
+    },
+     "Song" : {
+        "SongOf" : "Chansons de ",
+        "Listen" : "écouter"
+    }
+    
+}

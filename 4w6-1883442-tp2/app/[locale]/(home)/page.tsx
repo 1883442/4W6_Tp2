@@ -1,21 +1,22 @@
 "use client";
 import Image from "next/image";
 import { Key, useContext, useEffect, useState } from "react";
-import { Artist } from "./_types/artiste";
-import { CounterContext } from "./_components/context-wrapper";
+import { Artist } from "../../_types/artiste";
+import { CounterContext } from "../../_components/context-wrapper";
 import axios from "axios";
-import { ArtistCard } from "./_components/artiste-card";
-import { spotifyRequest } from "./spotify-interceptor";
-import { SpotifyContext } from "./_components/context-spotify";
-import UseSpotifyCall from "./_hooks/use-spotify-call";
-import { CurrentArtistContext } from "./_components/context-currentArtist";
+import { ArtistCard } from "../../_components/artiste-card";
+import { spotifyRequest } from "../../spotify-interceptor";
+import { SpotifyContext } from "../../_components/context-spotify";
+import UseSpotifyCall from "../../_hooks/use-spotify-call";
+import { CurrentArtistContext } from "../../_components/context-currentArtist";
+import { useTranslations } from "next-intl";
 
 export default function Home() {
 
 	const [userInput, setUserInput] = useState<string>("");
 	const useSpotifyHook = UseSpotifyCall();
 	const [listArtiste, setListeArtist] = useState<Artist[]>()
-
+	const t = useTranslations('Home')
 
 
 	 useEffect(() => {
@@ -60,13 +61,13 @@ export default function Home() {
        <main className="w-5xl mx-auto my-4">
 		<div className="flex">
 			<div className="flex-1 p-3">
-				<h3 className="text-xl font-bold">Ajouter un artiste</h3>
-				<input onClick={() => useSpotifyHook.connect()} type="submit" value="Connect" className="lightButton" />
+				<h3 className="text-xl font-bold">{t('Add')}</h3>
+				<input onClick={() => useSpotifyHook.connect()} type="submit" value={t('Connect')} className="lightButton" />
 				<input type="text" value={userInput} onChange={(e) => setUserInput(e.target.value)} name="artist" placeholder="Nana Mouskouri" className="lightInput my-2" />
-				<input onClick={() => ajouterAuFavoris(userInput)} type="submit" value="Rechercher" className="lightButton" />
+				<input onClick={() => ajouterAuFavoris(userInput)} type="submit" value={t('Search')} className="lightButton" />
 			</div>
 			<div className="flex-3 p-3 text-center">
-				<h2 className="text-2xl font-bold">Vos artistes</h2>
+				<h2 className="text-2xl font-bold">{t('YourArtist')}</h2>
 				<div className="flex flex-wrap mt-2">
 					 <div className="flex flex-wrap mt-2">
 					<div className="basis-1/3">
@@ -78,7 +79,7 @@ export default function Home() {
 				</div>
 				</div>
 				<div className="flex justify-center mt-2">
-					<button onClick={emptyFavoris} className="lightButton">Vider les favoris</button>
+					<button onClick={emptyFavoris} className="lightButton">{t('Empty')}</button>
 				</div>
 			</div>
 		</div>
